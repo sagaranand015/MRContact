@@ -140,10 +140,10 @@
 				} 
 				else {
 					// everything looks good! AJAX request to be given here.
-					var contactName = $('#txtContactName').val();
-					var contactEmail = $('#txtContactEmail').val();
-					var contactTel = $('#txtContactTel').val();
-					var contactMsg = $('#txtContactMsg').val();
+					var contactName = $('#txtContactName').val().trim();
+					var contactEmail = $('#txtContactEmail').val().trim();
+					var contactTel = $('#txtContactTel').val().trim();
+					var contactMsg = $('#txtContactMsg').val().trim();
 
 					// make the AJAX request for adding the data to the database here.
 					popup.fadeOut();
@@ -184,6 +184,65 @@
 							popup.append("<p>Oops! We encountered an error while processing your Request. Please try again.</p>").fadeIn();
 						}
 					});
+				}   // end of else
+				return false;
+			});
+
+			// for the campus ambassador form
+			$('#formCampusAbs').validator().on('submit', function (e) {
+				if (e.isDefaultPrevented()) {
+					alertMsg.children('p').remove();
+					alertMsg.fadeOut();
+					popup.children('p').remove();
+					popup.append("<p>Oops! Looks like you did not fill the fields correctly. Please Recheck and try again.</p>").fadeIn();
+				} 
+				else {
+					// everything looks good! AJAX request to be given here.
+					var campusAbsName = $('#txtCampusAbsName').val().trim();
+					var campusAbsEmail = $('#txtCampusAbsEmail').val().trim();
+					var campusAbsTel = $('#txtCampusAbsTel').val().trim();
+					var campusAbsCollege = $('#txtCampusAbsCollege').val().trim();
+
+					// make the AJAX request for adding the data to the database here.
+					popup.fadeOut();
+					alertMsg.children('p').remove();
+					alertMsg.append("<p>Please wait for a moment while we submit your request...</p>").fadeIn();
+					$.ajax({
+						type: "GET",
+						url: "AJAXFunctions.php",
+						data: {
+							no: "2", campusAbsName: campusAbsName, campusAbsEmail: campusAbsEmail, campusAbsTel: campusAbsTel, campusAbsCollege: campusAbsCollege
+						},
+						success: function(response) {
+							alertMsg.children('p').remove();
+							alertMsg.fadeOut();
+
+							var res = response.split(" ~ ");
+							response = res[0];
+							var adminMail = res[1];
+							var userMail = res[2];
+
+							if(response == "1" && adminMail == "1" && userMail == "1") {
+								popup.children('p').remove();
+								popup.append("<p>Thank You for applying to the Campus Ambassador programme of Mentored-Research. Please check your inbox for more details.</p>").fadeIn();
+							}
+							else if(adminMail == "-1" || userMail == "-1") {
+								popup.children('p').remove();
+								popup.append("<p>Oops! There seems to be a problem connecting to the Mentored-Research's server. Please try again.</p>").fadeIn();								
+							}
+							else {
+								popup.children('p').remove();
+								popup.append("<p>Oops! There seems to be a problem connecting to the Mentored-Research's server. Please try again.</p>").fadeIn();																
+							}
+						},
+						error: function(response) {
+							alertMsg.children('p').remove();
+							alertMsg.fadeOut();
+							popup.children('p').remove();
+							popup.append("<p>Oops! We encountered an error while processing your Request. Please try again.</p>").fadeIn();
+						}
+					});
+
 				}   // end of else
 				return false;
 			});
@@ -286,35 +345,35 @@
     		</h1>
 
     		<!-- table for the contact us form -->
-    		<table class="table">
-    			<tr>
-    				<td>
-    					<input type="text" id="txtCampusAbsName" placeholder="Enter Name*" class="form-control" />
-    				</td>
-    			</tr>
-    			<tr>
-    				<td>
-    					<input type="email" id="txtCampusAbsEmail" placeholder="Enter Email Address*" class="form-control" />
-    				</td>
-    			</tr>
-    			<tr>
-    				<td>
-    					<input type="text" id="txtCampusAbsTel" placeholder="Enter Phone number*" class="form-control" />
-    				</td>
-    			</tr>
-    			<tr>
-    				<td>
-    					<input type="text" id="txtCampusAbsCollege" placeholder="Enter College Name*" class="form-control" />
-    				</td>
-    			</tr>
-    			<tr>
-    				<td>
-    					<button id="btnContactUs" class="btn btn-lg btn-primary btn-block">
-    						Submit
-    					</button>
-    				</td>
-    			</tr>
-    		</table>
+    		<form role="form" data-toggle="validator" id="formCampusAbs">
+	    		<table class="table">
+	    			<tr>
+	    				<td>
+	    					<input type="text" id="txtCampusAbsName" placeholder="Enter Name*" class="form-control" required />
+	    				</td>
+	    			</tr>
+	    			<tr>
+	    				<td>
+	    					<input type="email" id="txtCampusAbsEmail" placeholder="Enter Email Address*" class="form-control" required />
+	    				</td>
+	    			</tr>
+	    			<tr>
+	    				<td>
+	    					<input type="tel" id="txtCampusAbsTel" placeholder="Enter Phone number*" class="form-control" required />
+	    				</td>
+	    			</tr>
+	    			<tr>
+	    				<td>
+	    					<input type="text" id="txtCampusAbsCollege" placeholder="Enter College Name*" class="form-control" required />
+	    				</td>
+	    			</tr>
+	    			<tr>
+	    				<td>
+	    					<input type="submit" value="Be a Campus Ambassador" id="btnCampusAbs" class="btn btn-lg btn-primary btn-block" />
+	    				</td>
+	    			</tr>
+	    		</table>
+    		</form>
 		</div>
     </section>
 
