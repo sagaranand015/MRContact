@@ -109,6 +109,47 @@
         	color: #fff;
         }
 
+         /*for the smallest phones*/ 
+        @media (max-width:767px){
+			#contactUsTab {
+				float: left;
+			}   
+			#campusAbsTab {
+				float: left;
+			}         
+        }   
+
+        /*for the tablets and all*/
+        @media (min-width:768px){
+        	#contactUsTab {
+				float: left;
+			}   
+			#campusAbsTab {
+				float: right;
+			}         
+        }
+
+        /*for medium screens and desktops*/
+        @media (min-width:992px){
+            #contactUsTab {
+				float: left;
+			}   
+			#campusAbsTab {
+				float: right;
+			}         
+        }
+
+        /*for large screens*/ 
+        @media (min-width:1200px){
+            #contactUsTab {
+				float: left;
+			}   
+			#campusAbsTab {
+				float: right;
+			}         
+        }
+
+
     </style>
 
 	<script type="text/javascript">
@@ -129,6 +170,17 @@
 
     		// for the scrolly thing.
     		$('.scrolly').scrolly();
+
+    		// for the queryStrings.
+    		if(qs["contact"] == "1") {
+    			$('#contactUsLink').trigger('click');
+    		}
+    		else if(qs["campusAbs"] == "1") {
+    			$('#campusAbsLink').trigger('click');
+    		}
+    		else {
+    			// nothing to be done here.
+    		}
 
         	// for submission of the contact us form.
         	$('#formContactUs').validator().on('submit', function (e) {
@@ -247,7 +299,6 @@
 				return false;
 			});
 
-
         });    // end of ready function.
 
 	</script>
@@ -293,17 +344,17 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
                     <li class="hidden">
-                        <a href="#page-top"></a>
+                        <a class="scrolly" href="#page-top"></a>
                     </li>
                     <li>
                     	<a href="http://mentored-research.com">MR-Home</a>
                     </li>
-                     <li>
+                    <!-- <li>
                     	<a class="scrolly" href="#contactus">Contact Us</a>
                     </li>
                      <li>
                     	<a class="scrolly" href="#campusAbs">Ambassador</a>
-                    </li>
+                    </li> -->
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
@@ -311,7 +362,29 @@
         <!-- /.container-fluid -->
     </nav>
 
-    <section id="contactus">
+    <div class="container" style="margin-top: 120px;">
+    	<ul class="nav nav-tabs">
+    		<li id="contactUsTab">
+    			<a href="#contactus" id="contactUsLink" class="scrolly">Contact Us</a>
+    		</li>
+    		<li id="campusAbsTab">
+    			<a href="#campusAbs" id="campusAbsLink" class="scrolly">Be our Campus Ambassador</a>
+    		</li>
+    	</ul>
+    </div>
+
+   <!--  <div class="container" style="margin-top: 120px;">
+    	<ul class="nav nav-tabs">
+    		<li id="contactUsTab">
+    			<button id="contactUsLink" class="btn btn-lg btn-primary scrolly">Contact Us</button>
+    		</li>
+    		<li id="campusAbsTab">
+    			<button id="campusAbsLink" class="btn btn-lg btn-primary scrolly">Be our Campus Ambassador</button>
+    		</li>
+    	</ul>
+    </div> -->
+
+    <section id="contactus" style="padding-top: 60px;">
     	<div class="container">
     		<h1 class="page-header">
     			Contact Us
@@ -350,7 +423,7 @@
 		</div>
     </section>
 
-    <section id="campusAbs" style="padding-top: 50px;">
+    <section id="campusAbs" style="padding-top: 20px;">
     	<div class="container">
     		<h1 class="page-header">
     			Campus Ambassador
