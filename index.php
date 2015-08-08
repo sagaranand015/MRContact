@@ -117,6 +117,9 @@
 			#campusAbsTab {
 				float: left;
 			}         
+			#campusAbs {
+				padding-top: 50px;
+			}
         }   
 
         /*for the tablets and all*/
@@ -127,28 +130,47 @@
 			#campusAbsTab {
 				float: right;
 			}         
+			#campusAbs {
+				padding-top: 60px;
+			}
         }
 
         /*for medium screens and desktops*/
         @media (min-width:992px){
             #contactUsTab {
 				float: left;
+				font-size: 1.2em;
 			}   
 			#campusAbsTab {
 				float: right;
+				font-size: 1.2em;
 			}         
+			#campusAbs {
+				padding-top: 60px;
+			}
         }
 
         /*for large screens*/ 
         @media (min-width:1200px){
             #contactUsTab {
 				float: left;
+				font-size: 1.2em;
 			}   
 			#campusAbsTab {
 				float: right;
+				font-size: 1.2em;
 			}         
+			#campusAbs {
+				padding-top: 70px;
+			}
         }
 
+        #campusAbsText h4 {
+        	color: #fff;
+        	text-align: center;
+        	font-family: writingText;
+        	text-transform: capitalize;
+        }
 
     </style>
 
@@ -216,13 +238,19 @@
 							var adminMail = res[1];
 							var userMail = res[2];
 
-							if(response == "1" && adminMail == "1" && userMail == "1") {
-								popup.children('p').remove();
-								popup.append("<p>Thank you for your Message. Please check your inbox for more details.</p>").fadeIn();
-							}
-							else if(adminMail == "-1" || userMail == "-1") {
-								popup.children('p').remove();
-								popup.append("<p>Oops! There seems to be a problem connecting to the Mentored-Research's server. Please try again.</p>").fadeIn();								
+							if(response == "1") {
+								if(adminMail == "1" && userMail == "1") {
+									popup.children('p').remove();
+									popup.append("<p>Thank You for connecting with Mentored-Research. Please check your mailbox for more details. Thank You.</p>").fadeIn();
+								}
+								else if(adminMail == "-2" || userMail == "-2") {
+									popup.children('p').remove();
+									popup.append("<p>Thank You for connecting with Mentored-Research. Please check your inbox for more details. We'll send you the mail in sometime. Thank You.</p>").fadeIn();									
+								}
+								else {
+									popup.children('p').remove();
+									popup.append("<p>Thank You for connecting with Mentored-Research, but we could not send the required mails. Please write to us at: <code>info@mentored-research.com</code> for more details. Thank You.</p>").fadeIn();																		
+								}
 							}
 							else {
 								popup.children('p').remove();
@@ -274,13 +302,19 @@
 							var adminMail = res[1];
 							var userMail = res[2];
 
-							if(response == "1" && adminMail == "1" && userMail == "1") {
-								popup.children('p').remove();
-								popup.append("<p>Thank You for applying to the Campus Ambassador programme of Mentored-Research. Please check your inbox for more details.</p>").fadeIn();
-							}
-							else if(adminMail == "-1" || userMail == "-1") {
-								popup.children('p').remove();
-								popup.append("<p>Oops! There seems to be a problem connecting to the Mentored-Research's server. Please try again.</p>").fadeIn();								
+							if(response == "1") {
+								if(adminMail == "1" && userMail == "1") {
+									popup.children('p').remove();
+									popup.append("<p>Thank You for applying to the Campus Ambassador programme of Mentored-Research. Please check your inbox for more details. Thank You.</p>").fadeIn();
+								}
+								else if(adminMail == "-2" || userMail == "-2") {
+									popup.children('p').remove();
+									popup.append("<p>Thank You for applying to the Campus Ambassador programme of Mentored-Research. Please check your inbox for more details. We'll send you the mail in sometime. Thank You.</p>").fadeIn();									
+								}
+								else {
+									popup.children('p').remove();
+									popup.append("<p>Thank You for applying to the Campus Ambassador programme of Mentored-Research, but we could not notify the Admin. Please write to us at: <code>info@mentored-research.com</code> for more details. Thank You.</p>").fadeIn();																		
+								}
 							}
 							else {
 								popup.children('p').remove();
@@ -373,17 +407,6 @@
     	</ul>
     </div>
 
-   <!--  <div class="container" style="margin-top: 120px;">
-    	<ul class="nav nav-tabs">
-    		<li id="contactUsTab">
-    			<button id="contactUsLink" class="btn btn-lg btn-primary scrolly">Contact Us</button>
-    		</li>
-    		<li id="campusAbsTab">
-    			<button id="campusAbsLink" class="btn btn-lg btn-primary scrolly">Be our Campus Ambassador</button>
-    		</li>
-    	</ul>
-    </div> -->
-
     <section id="contactus" style="padding-top: 60px;">
     	<div class="container">
     		<h1 class="page-header">
@@ -423,7 +446,20 @@
 		</div>
     </section>
 
-    <section id="campusAbs" style="padding-top: 20px;">
+    <section id="campusAbs">
+
+		<div class="container" id="campusAbsText">
+	    	<h4>
+	    		Are you interested in joining the Mentored-Research family?
+	    	</h4>
+	    	<h4>
+	    		Are you interested in making your college a Centre of Excellence in the field of finance?
+	    	</h4>
+	    	<h4>
+	    		If yes, then Apply for the Campus Ambassador position!
+	    	</h4>
+	    </div>
+
     	<div class="container">
     		<h1 class="page-header">
     			Campus Ambassador

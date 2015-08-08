@@ -27,6 +27,8 @@ function CampusAmbassador($name, $email, $tel, $college) {
 	}
 	catch(Exception $e) {
 		$resp = "-1";
+		$adminMail = "-1";
+		$userMail = "-1";
 		echo $resp . " ~ " . $adminMail . " ~ " . $userMail;
 	}
 }
@@ -45,6 +47,8 @@ function ContactUs($name, $email, $tel, $message) {
 	}
 	catch(Exception $e) {
 		$resp = "-1";
+		$adminMail = "-1";
+		$userMail = "-1";
 		echo $resp . " ~ " . $adminMail . " ~ " . $userMail;
 	}
 }
