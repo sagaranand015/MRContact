@@ -5,18 +5,45 @@
 //these are for the PHP Helper files
 include 'headers/databaseConn.php';
 
+// for mandrill mail sending API.
+require_once 'mandrill/Mandrill.php'; 
+
+// for sending the message through mandrill API.
+function SendMessage($to, $toName, $from, $fromName, $subject, $message) {
+	try {
+		$mandrill = new Mandrill('J99JDcmNNMQLw32QJGDadQ');
+		$message = array(
+	        'html' => $message,
+	        'subject' => $subject,
+	        'from_email' => 'info@mentored-research.co',
+	        'from_name' => 'Mentored-Research',
+	        'to' => array(
+	            array(
+	                'email' => $to,
+	                'name' => $toName,
+	                'type' => 'to'
+	            )
+	        )
+	    );
+	    $async = false;
+	    $ip_pool = 'Main Pool';
+	    $send_at = null;
+	    $result = $mandrill->messages->send($message, $async, $ip_pool, $send_at);
+		return $result;
+	} 
+	catch(Mandrill_Error $e) {
+		$res = "-1";
+		return $res;
+	}
+}
+
 // this is the function to send the mail to the user from the contactUs page for Campus Ambassador mail.
 // returns 1 on success and -1 on Failure.
 function CampusAbsUserMail($to, $name) {
 	$res = "-1";
 	$mailBody = "";
 	try{
-
 		$subject = "Welcome to Mentored-Research";
-
-		$headers = "MIME-Version: 1.0" . "\r\n";
-		$headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
-		$headers .= "From: guide@mentored-research.com" . "\r\n";
 
 		// write the mail body here.
 		$mailBody .= "&nbsp; &nbsp; <h1>MENTORED-RESEARCH</h1> <br />";
@@ -37,11 +64,15 @@ function CampusAbsUserMail($to, $name) {
 		$mailBody .= "<a href='https://www.linkedin.com/company/2217419?trk=tyah&amp;trkInfo=tarId%3A1401993298521%2Ctas%3Amentored%2Cidx%3A1-3-3' target='_blank' >LinkedIn</a>";
 		$mailBody .= "<br /><br />-------------------------------------------------------------------------------------------------------<br />This is an automated mail. Please do not reply to this message.";
 
-		if(mail($to, $subject, $mailBody, $headers) == true) {
+		$resp = SendMessage($to, $name, "info@mentored-research.co", "Mentored-Research", $subject, $mailBody);
+		if($resp[0]["status"] == "sent") {
 			$res = "1";
 		}
-		else {
-			$res = "-1";	
+		else if($resp[0]["status"] == "sent" || $resp[0]["status"] == "queued" || $resp[0]["status"] == "scheduled") {
+			$res = "-2";
+		}
+		else if($resp[0]["status"] == "rejected" || $resp[0]["status"] == "invalid") {
+			$res = "-1";
 		}
 		return $res;
 	}	
@@ -60,10 +91,6 @@ function CampusAbsAdminMail($to, $name, $email, $tel, $college, $date) {
 
 		$subject = "Campus Ambassador Request Recieved";
 
-		$headers = "MIME-Version: 1.0" . "\r\n";
-		$headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
-		$headers .= "From: guide@mentored-research.com" . "\r\n";
-
 		// write the mail body here.
 		$mailBody .= "<h1>Campus Ambassador Request Recieved</h1><br />";
 		$mailBody .= "Dear Admin, " . "<br />";
@@ -79,11 +106,15 @@ function CampusAbsAdminMail($to, $name, $email, $tel, $college, $date) {
 		$mailBody .= "<br />MR - Connect";
 		$mailBody .= "<br /><a href='http://mentored-research.com'>Mentored-Research</a>";
 
-		if(mail($to, $subject, $mailBody, $headers) == true) {
+		$resp = SendMessage($to, $name, "info@mentored-research.com", "Mentored-Research", $subject, $mailBody);
+		if($resp[0]["status"] == "sent") {
 			$res = "1";
 		}
-		else {
-			$res = "-1";	
+		else if($resp[0]["status"] == "sent" || $resp[0]["status"] == "queued" || $resp[0]["status"] == "scheduled") {
+			$res = "-2";
+		}
+		else if($resp[0]["status"] == "rejected" || $resp[0]["status"] == "invalid") {
+			$res = "-1";
 		}
 		return $res;
 	}	
@@ -124,10 +155,6 @@ function ContactUsUserMail($to, $name) {
 
 		$subject = "Welcome to Mentored-Research";
 
-		$headers = "MIME-Version: 1.0" . "\r\n";
-		$headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
-		$headers .= "From: guide@mentored-research.com" . "\r\n";
-
 		// write the mail body here.
 		$mailBody .= "&nbsp; &nbsp; <h1>MENTORED-RESEARCH</h1> <br />";
 		$mailBody .= "Dear " . $name . "<br />";
@@ -146,11 +173,15 @@ function ContactUsUserMail($to, $name) {
 		$mailBody .= "<a href='https://www.linkedin.com/company/2217419?trk=tyah&amp;trkInfo=tarId%3A1401993298521%2Ctas%3Amentored%2Cidx%3A1-3-3' target='_blank' >LinkedIn</a>";
 		$mailBody .= "<br /><br />-------------------------------------------------------------------------------------------------------<br />This is an automated mail. Please do not reply to this message.";
 
-		if(mail($to, $subject, $mailBody, $headers) == true) {
+		$resp = SendMessage($to, $name, "info@mentored-research.co", "Mentored-Research", $subject, $mailBody);
+		if($resp[0]["status"] == "sent") {
 			$res = "1";
 		}
-		else {
-			$res = "-1";	
+		else if($resp[0]["status"] == "sent" || $resp[0]["status"] == "queued" || $resp[0]["status"] == "scheduled") {
+			$res = "-2";
+		}
+		else if($resp[0]["status"] == "rejected" || $resp[0]["status"] == "invalid") {
+			$res = "-1";
 		}
 		return $res;
 	}	
@@ -188,11 +219,15 @@ function ContactUsAdminMail($to, $name, $email, $tel, $message, $date) {
 		$mailBody .= "<br />MR - Connect";
 		$mailBody .= "<br /><a href='http://mentored-research.com'>Mentored-Research</a>";
 
-		if(mail($to, $subject, $mailBody, $headers) == true) {
+		$resp = SendMessage($to, $name, "info@mentored-research.co", "Mentored-Research", $subject, $mailBody);
+		if($resp[0]["status"] == "sent") {
 			$res = "1";
 		}
-		else {
-			$res = "-1";	
+		else if($resp[0]["status"] == "sent" || $resp[0]["status"] == "queued" || $resp[0]["status"] == "scheduled") {
+			$res = "-2";
+		}
+		else if($resp[0]["status"] == "rejected" || $resp[0]["status"] == "invalid") {
+			$res = "-1";
 		}
 		return $res;
 	}	
