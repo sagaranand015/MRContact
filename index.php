@@ -252,6 +252,10 @@
 									popup.append("<p>Thank You for connecting with Mentored-Research, but we could not send the required mails. Please write to us at: <code>info@mentored-research.com</code> for more details. Thank You.</p>").fadeIn();																		
 								}
 							}
+							else if(response == "-1") {
+								popup.children('p').remove();
+								popup.append("<p>Thank You for connecting with Mentored-Research. For further correspondence, please write to us at: <code>info@mentored-research.com</code> for more details. Thank You.</p>").fadeIn();																
+							}
 							else {
 								popup.children('p').remove();
 								popup.append("<p>Oops! There seems to be a problem connecting to the Mentored-Research's server. Please try again.</p>").fadeIn();																

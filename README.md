@@ -13,5 +13,4 @@ Pay special attention to the "no" field that goes as data in the jQuery AJAX cod
 There are mail functions,built into PHP only, for the mailing requirements on this page.
 
 For any queries:
-sagar.anand015@gmail.com
-
+tech@mentored-research.com
